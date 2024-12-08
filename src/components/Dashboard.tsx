@@ -24,10 +24,10 @@ export function Dashboard() {
       const response = await ApiService.uploadDocument(formData);
       setParsedDocument(response);
       setCurrentStep('form');
-      showToast('Document successfully parsed', 'success');
+      // showToast('Document successfully parsed', 'success');
     } catch (error) {
       console.error('Upload error:', error);
-      showToast('Failed to parse document', 'error');
+      // showToast('Failed to parse document', 'error');
     } finally {
       setLoading(false);
     }
@@ -47,13 +47,13 @@ export function Dashboard() {
       // Then send to BorderConnect
       const borderConnectResponse = await ApiService.sendToBorderConnect(manifestResponse);
       
-      showToast('Manifest successfully submitted', 'success');
+      // showToast('Manifest successfully submitted', 'success');
       setCurrentStep('upload');
       setManifestData(null);
       setParsedDocument(null);
     } catch (error) {
       console.error('Submission error:', error);
-      showToast('Failed to submit manifest', 'error');
+      // showToast('Failed to submit manifest', 'error');
     } finally {
       setLoading(false);
     }
