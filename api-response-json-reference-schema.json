@@ -1,0 +1,190 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"type": "object",
+	"title": "API Response Manual",
+	"required": [
+		"data",
+		"status",
+		"message",
+		"dateTime"
+	],
+	"properties": {
+		"data": {
+			"type": "string",
+			"title": "Data",
+			"description": "<ul>\r\n\t<li>Used to indicate the type of data the JSON file contains. e.g., for an API Response the data field should be &quot;API_RESPONSE&quot;</li>\r\n\t<li>A list of acceptable data types can be found here:&nbsp;<a href=\"http://borderconnect.com/borderconnect/data/data-types.json\">http://borderconnect.com/borderconnect/data/data-types.json</a></li>\r\n</ul>\r\n",
+			"minLength": 8,
+			"maxLength": 20,
+			"enum": [
+				"ACE_SHIPMENT",
+				"ACE_TRIP",
+				"ACE_SEND_REQUEST",
+				"ACE_RESPONSE",
+				"RNS_SHIPMENT",
+				"RNS_SEND_REQUEST",
+				"RNS_ERROR_RESPONSE",
+				"ACI_SHIPMENT",
+				"ACI_TRIP",
+				"ACI_SEND_REQUEST",
+				"ACI_RESPONSE",
+				"ACI_NOTICE",
+				"API_RESPONSE"
+			]
+		},
+		"sendId": {
+			"type": "string",
+			"title": "Send ID",
+			"description": "<ul>\r\n\t<li>Unique ID assigned by the software integrating with BorderConnect, quoted back to help the original sender identify what the response pertains to.</li>\r\n</ul>\r\n",
+			"minLength": 1,
+			"maxLength": 68
+		},
+		"companyKey": {
+			"type": "string",
+			"title": "Company Key",
+			"description": "<ul>\r\n\t<li>Used when connected as a service provider to identify which company account the API Response pertains to. Will exactly match company key for the account.</li>\r\n</ul>\r\n",
+			"minLength": 1,
+			"maxLength": 30
+		},
+		"status": {
+			"type": "string",
+			"title": "Status",
+			"description": "<ul>\r\n\t<li>Indicates the results of your JSON file upload.</li>\r\n\t<li>&quot;QUEUED&quot; means that your JSON file has been queued for processing in BorderConnect.</li>\r\n\t<li>&quot;IMPORTED&quot; means that your eManifest data has been imported successfully without error.</li>\r\n\t<li>&quot;TRANSMITTED&quot; means the your Send Request was processed successfully without error.</li>\r\n\t<li>An error status will be returned to indicate a problem with either the file you uploaded, or the business logic of the situation in which you uploaded it.</li>\r\n\t<li>For a complete list of statuses, click here:&nbsp;<a href=\"http://www.borderconnect.com/borderconnect/data/api-response-status-types.json\">http://www.borderconnect.com/borderconnect/data/api-response-status-types.json</a></li>\r\n</ul>\r\n",
+			"minLength": 1,
+			"maxLength": 20,
+			"enum": [
+				"OK",
+				"QUEUED",
+				"IMPORTED",
+				"TRANSMITTED",
+				"DATA_ERROR",
+				"SEND_ERROR",
+				"ACCESS_DENIED_ERROR",
+				"IMPORTED_WITH_ERRORS",
+				"PROCESSED_WITH_ERRORS"
+			]
+		},
+		"message": {
+			"type": "string",
+			"title": "Message",
+			"description": "<ul>\r\n\t<li>Plain text description elaborating on the information conveyed by Status.</li>\r\n</ul>\r\n",
+			"minLength": 1,
+			"maxLength": 100
+		},
+		"errors": {
+			"type": "array",
+			"title": "Errors",
+			"description": "<ul>\r\n\t<li>Lists of errors that are the cause of an error Status.</li>\r\n</ul>\r\n",
+			"maxItems": 99999,
+			"items": {
+				"type": "object",
+				"title": "Error",
+				"description": "<ul>\r\n\t<li>Used to convey information as to the cause of the error.</li>\r\n\t<li>See indivdual field elements below.</li>\r\n</ul>\r\n",
+				"required": [
+					"identifier",
+					"note",
+					"canBeCondensed"
+				],
+				"properties": {
+					"identifier": {
+						"type": "string",
+						"title": "Error Identifier",
+						"description": "<ul>\r\n\t<li>Specifies the value or field that is the cause of the error.</li>\r\n</ul>\r\n",
+						"minLength": 1,
+						"maxLength": 50
+					},
+					"note": {
+						"type": "string",
+						"title": "Error Note",
+						"description": "<ul>\r\n\t<li>Plain text description of the error.</li>\r\n</ul>\r\n",
+						"minLength": 1,
+						"maxLength": 500
+					},
+					"canBeCondensed": {
+						"type": "boolean"
+					}
+				}
+			}
+		},
+		"dateTime": {
+			"type": "string",
+			"title": "Date Time",
+			"description": "<ul>\r\n\t<li>The date and time at which the processing occurred in BorderConnect to generate the API Response.</li>\r\n</ul>\r\n",
+			"minLength": 19,
+			"maxLength": 19
+		},
+		"tripCount": {
+			"type": "integer",
+			"title": "Trip Count",
+			"description": "<ul>\r\n\t<li>Indicates the number of ACE or ACI Trips imported. Only applies to ACE or ACI eManifest uploads.</li>\r\n</ul>\r\n",
+			"multipleOf": 1,
+			"minimum": 1,
+			"exclusiveMinimum": false
+		},
+		"shipmentCount": {
+			"type": "integer",
+			"title": "Shipment Count",
+			"description": "<ul>\r\n\t<li>Indicates the number of ACE or ACI shipments imported. Only applies to ACE or ACI eManifest uploads.</li>\r\n</ul>\r\n",
+			"multipleOf": 1,
+			"minimum": 1,
+			"exclusiveMinimum": false
+		},
+		"tripNumber": {
+			"type": "string",
+			"title": "Trip Number",
+			"description": "<ul>\r\n\t<li>The trip number of the manifest that is applicable to the API Response.</li>\r\n</ul>\r\n",
+			"minLength": 8,
+			"maxLength": 25
+		},
+		"tripNumbers": {
+			"type": "string",
+			"description": "<ul>\n\t<li>The trip numbers of the manifest that is applicable to the API Response.</li>\n</ul>\n"
+		},
+		"shipmentControlNumber": {
+			"type": "string"
+		},
+		"cargoControlNumber": {
+			"type": "string"
+		},
+		"inBondEntryNumber": {
+			"type": "string"
+		},
+		"type": {
+			"type": "string"
+		},
+		"pdfDocumentType": {
+			"type": "string"
+		},
+		"pdfDocumentAction": {
+			"type": "string"
+		},
+		"activeConnections": {
+			"type": "integer",
+			"title": "Active Connections",
+			"description": "<ul>\r\n\t<li>Only received as part of API Response confirming your connection has been authenticated.</li>\r\n\t<li>Specifies the number of active connections for that API Key.</li>\r\n</ul>\r\n",
+			"multipleOf": 1,
+			"minimum": 1,
+			"exclusiveMinimum": false
+		},
+		"trucks": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"properties": {}
+			}
+		},
+		"drivers": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"properties": {}
+			}
+		},
+		"trailers": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"properties": {}
+			}
+		}
+	}
+}
